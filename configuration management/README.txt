@@ -7,9 +7,9 @@ This solutions makes the following assumption:
 
 Instructions:
 
-  1 run: 'ansible-playbook configman.yml' from this directory (or it won't find your template)
-  2 ???
-  3 Profit!
+  1) run: 'ansible-playbook configman.yml' from this directory (or it won't find your template)
+  2) ???
+  3) Profit!
 
   The way ansible playbooks are designed so long as you properly use the name: option
 they are basically self documenting. It's pretty nice and definitely one of the many
