@@ -2,7 +2,7 @@ option 1234
 speed 88mph
 capacitor_type flux
 # Replace this
-widget_type X
+widget_type {{ widget_type }}
 # ... with this:
 # widget_type (output from facter -p widget)
 model delorean
