@@ -3,9 +3,9 @@ Log Scraper
 
 Instructions:
 
-  1 Run: ./log_scraper <logfile>
-	2 Enjoy glorious output
-	3 Have some coffee
+  1) Run: ./log_scraper <logfile>
+	2) Enjoy glorious output
+	3) Have some coffee
 
 Language justification:
 
