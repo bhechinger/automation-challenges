@@ -3,7 +3,7 @@
   tasks:
 
   - name: get facter -p widget output
-    shell: 'cat /etc/hostname'
+    shell: 'facter -p widget'
     register: factor_p_widget
     when: widget_type is not defined
 
