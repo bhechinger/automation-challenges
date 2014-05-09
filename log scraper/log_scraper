@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+LOGFILE=${1}
+
+if [ "${1}x" == "x" ]; then
+	echo
+	echo "  Usage: $(basename ${0}) <logfile>"
+	echo
+	exit
+fi
+
+awk '
+#
+# We shall initialize some variables here.
+# I do not think this is needed but old habits die hard.
+#
+BEGIN {
+	sshd_config_cnt = 0;
+	sshd_config_not_200_cnt = 0;
+	total_not_200_cnt = 0;
+	dev_report_cnt = 0;
+}
+
+#
+# This will see every line so we use it to fetch the client IP and put it
+# in a variable, setting the position of the HTTP return code and counting
+# the total number of lines that do not return a 200 response.
+#
+{
+	CLIENT_IP = $(1)
+	client_cnt[CLIENT_IP]++
+	HTTP_RET_CODE = $(NF - 3);
+	if (HTTP_RET_CODE != 200) {
+		total_not_200_cnt++;
+	}
+}
+
+#
+# This matches only lines with /production/file_metadata/modules/ssh/sshd_config
+# in them so we can count them as well as how many of them return non-200 responses.
+#
+/\/production\/file_metadata\/modules\/ssh\/sshd_config/ {
+	sshd_config_cnt++;
+	if (HTTP_RET_CODE != 200) {
+		sshd_config_not_200_cnt++;
+	}
+}
+
+#
+# This matches only lines with /dev/report/ in them which we take a total count of as
+# well as counting per IP matches.
+#
+/\/dev\/report\// {
+	dev_report_cnt++;
+	dev_report[CLIENT_IP]++
+}
+
+#
+# Now that we have collected all the information we shall print it out.
+#
+END {
+	print "sshd_config count:", sshd_config_cnt;
+	print "sshd_config not 200 count:", sshd_config_not_200_cnt;
+	print "total not 200 count:", total_not_200_cnt;
+	print "total dev_report:", dev_report_cnt;
+	print "dev_report breakdown by IP:"
+	for (dev_idx in dev_report) {
+		print "  " dev_idx ":", dev_report[dev_idx]
+	}
+	print "breakdown of how many requests per client:"
+	for (c_idx in client_cnt) {
+		print "  " c_idx ":", client_cnt[c_idx]
+	}
+}
+' ${LOGFILE}
