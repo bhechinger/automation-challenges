@@ -1,0 +1,15 @@
+- hosts: all
+  sudo: true
+  tasks:
+
+  - name: get facter -p widget output
+    shell: 'cat /etc/hostname'
+    register: factor_p_widget
+    when: widget_type is not defined
+
+  - name: set widget type
+    set_fact: widget_type={{ factor_p_widget.stdout }}
+    when: widget_type is not defined
+
+  - name: deploy /etc/widgetfile
+    template: src=template.file dest=/etc/widgetfile owner=root group=root mode=0644
