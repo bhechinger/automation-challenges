@@ -10,4 +10,4 @@ Instructions:
 Language justification:
 
   In my (likely not so) humble opinion there is no better language for text
-  processing than awk. It makes for clean, easy to read code if written right.
+processing than awk. It makes for clean, easy to read code if written right.
