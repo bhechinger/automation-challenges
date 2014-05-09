@@ -19,6 +19,12 @@ Instructions:
 
   3) Test per the specs in README.md
 
+  4) Deactivate the virtualenv after you are done running rest_server.py
+    a) deactivate
+
+  Setting this up to run under a web server with uwsgi is outside the scope of
+this document and honestly rather a silly thing to do. So don't do that. :)
+
 Language justification:
 
   I'm a huge fan of python for tasks like this. It's easy to use and has great
