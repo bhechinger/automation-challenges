@@ -1,0 +1,80 @@
+#
+# First run where no files exist on hosts yet
+#
+
+PLAY [all] ******************************************************************** 
+
+GATHERING FACTS *************************************************************** 
+ok: [ansible1.4amlunch.net]
+ok: [ipa1.4amlunch.net]
+ok: [liam.4amlunch.net]
+ok: [itools1.4amlunch.net]
+ok: [ipa2.4amlunch.net]
+
+TASK: [get facter -p widget output] ******************************************* 
+failed: [ansible1.4amlunch.net] => {"changed": true, "cmd": "cat /etc/hostname ", "delta": "0:00:00.014417", "end": "2014-05-09 07:09:18.151454", "rc": 1, "start": "2014-05-09 07:09:18.137037"}
+stderr: cat: /etc/hostname: No such file or directory
+failed: [ipa1.4amlunch.net] => {"changed": true, "cmd": "cat /etc/hostname ", "delta": "0:00:00.017162", "end": "2014-05-09 07:09:19.258153", "rc": 1, "start": "2014-05-09 07:09:19.240991"}
+stderr: cat: /etc/hostname: No such file or directory
+changed: [liam.4amlunch.net]
+changed: [itools1.4amlunch.net]
+failed: [ipa2.4amlunch.net] => {"changed": true, "cmd": "cat /etc/hostname ", "delta": "0:00:00.284307", "end": "2014-05-09 07:09:31.628026", "rc": 1, "start": "2014-05-09 07:09:31.343719"}
+stderr: cat: /etc/hostname: No such file or directory
+
+TASK: [set widget type] ******************************************************* 
+ok: [liam.4amlunch.net]
+ok: [itools1.4amlunch.net]
+
+TASK: [deploy /etc/widgetfile] ************************************************ 
+changed: [liam.4amlunch.net]
+changed: [itools1.4amlunch.net]
+
+PLAY RECAP ******************************************************************** 
+           to retry, use: --limit @/home/ansible/configman.retry
+
+ansible1.4amlunch.net      : ok=1    changed=0    unreachable=0    failed=1   
+ipa1.4amlunch.net          : ok=1    changed=0    unreachable=0    failed=1   
+ipa2.4amlunch.net          : ok=1    changed=0    unreachable=0    failed=1   
+itools1.4amlunch.net       : ok=4    changed=2    unreachable=0    failed=0   
+liam.4amlunch.net          : ok=4    changed=2    unreachable=0    failed=0   
+
+#
+# Second run after files already exist
+#
+
+PLAY [all] ******************************************************************** 
+
+GATHERING FACTS *************************************************************** 
+ok: [ipa1.4amlunch.net]
+ok: [ansible1.4amlunch.net]
+ok: [liam.4amlunch.net]
+ok: [itools1.4amlunch.net]
+ok: [ipa2.4amlunch.net]
+
+TASK: [get facter -p widget output] ******************************************* 
+failed: [ansible1.4amlunch.net] => {"changed": true, "cmd": "cat /etc/hostname ", "delta": "0:00:00.062996", "end": "2014-05-09 07:10:50.276705", "rc": 1, "start": "2014-05-09 07:10:50.213709"}
+stderr: cat: /etc/hostname: No such file or directory
+failed: [ipa1.4amlunch.net] => {"changed": true, "cmd": "cat /etc/hostname ", "delta": "0:00:00.016318", "end": "2014-05-09 07:10:51.375328", "rc": 1, "start": "2014-05-09 07:10:51.359010"}
+stderr: cat: /etc/hostname: No such file or directory
+changed: [liam.4amlunch.net]
+changed: [itools1.4amlunch.net]
+failed: [ipa2.4amlunch.net] => {"changed": true, "cmd": "cat /etc/hostname ", "delta": "0:00:00.299050", "end": "2014-05-09 07:11:01.606382", "rc": 1, "start": "2014-05-09 07:11:01.307332"}
+stderr: cat: /etc/hostname: No such file or directory
+
+TASK: [set widget type] ******************************************************* 
+ok: [itools1.4amlunch.net]
+ok: [liam.4amlunch.net]
+
+TASK: [deploy /etc/widgetfile] ************************************************ 
+ok: [liam.4amlunch.net]
+ok: [itools1.4amlunch.net]
+
+PLAY RECAP ******************************************************************** 
+           to retry, use: --limit @/home/ansible/configman.retry
+
+ansible1.4amlunch.net      : ok=1    changed=0    unreachable=0    failed=1   
+ipa1.4amlunch.net          : ok=1    changed=0    unreachable=0    failed=1   
+ipa2.4amlunch.net          : ok=1    changed=0    unreachable=0    failed=1   
+itools1.4amlunch.net       : ok=4    changed=1    unreachable=0    failed=0   
+liam.4amlunch.net          : ok=4    changed=1    unreachable=0    failed=0   
+
